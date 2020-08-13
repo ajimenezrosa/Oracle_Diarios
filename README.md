@@ -219,3 +219,10 @@
 |---------------|---------------|
 | KEEP POOL     |  RECLICLE POOL|
 | BUFFER CACHE 1|  BUFFER CACHE2|
+
+#
+
+# PGA (PROGRAM GLOBAL AREA)
+|SORT AREA      | HASH AREA     | 
+|---------------|---------------|
+|BITMAP AREAS   | DATOS SESION Y CURSORES|
