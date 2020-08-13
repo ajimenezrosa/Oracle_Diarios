@@ -107,8 +107,11 @@
 + Usa nombres de archivos de base de datos consistentes. Los archivos de la base de datos deben tener nombres adecuados que los distingan de otro tipo de archivos y al mismo tiempo, saber a qué base de datos y tablespace pertenecen. Los control files, redo log files y data files, se identifican de manera fácil.
 + Separación de contenido de tablespaces. El contenido de los tablespaces, es separado para minimizar la fragmentación y la contención de I/O, así como maximizar la administración de los mismos.
 
+ [Descripcion de OFA](https://orlandoolguin.wordpress.com/2010/08/23/que-es-la-ofa/#:~:text=Como%20ya%20lo%20coment%C3%A9%20en,para%20evitar%20cuellos%20de%20botella./ "Title") inline link.
 
-![Descripcion]: https://orlandoolguin.wordpress.com/2010/08/23/que-es-la-ofa/#:~:text=Como%20ya%20lo%20coment%C3%A9%20en,para%20evitar%20cuellos%20de%20botella. datos del OFA.
+# 
+# 
+
 
 # Instalación en Linux. Configurar parametros de Kernel
 
@@ -255,3 +258,21 @@
 |Parameter file|Fichero de parámetro de la Base de datos|
 |Backup|Ficheros de copia de seguridad|
 |Traza y alert|Ficheros de traza y log de la Base de datos|
+
+# 
+
+# MULTITENANT
+
+### Oracle Multitenant es la arquitectura de la nube de base de datos de la nueva generación. Ofrece aislamiento, agilidad y economías de escala. Una base de datos de contenedor multiempresa puede contener muchas bases de datos de tipo "pluggable". Una base de datos existente puede simplemente adoptarse sin que se requieran cambios en la aplicación. Oracle Multitenant complementa totalmente otras opciones, incluidos Oracle Real Application Clusters y Oracle Active Data Guard.
+
+![](https://1.bp.blogspot.com/-RioWC28x8_M/U3gHLHwigmI/AAAAAAAADhw/sto69JfXkiQ/s1600/3.jpg)
+
+### Links de consultas 
+
+
+
+
+ [Oracle Multitenant](https://www.oracle.com/es/database/technologies/multitenant.html#:~:text=Oracle%20Multitenant%20es%20la%20arquitectura,datos%20de%20tipo%20%22pluggable%22./ "Title") inline link.
+
+ [Database Concepts / 17 Introduction to the Multitenant Architecture](https://docs.oracle.com/database/121/CNCPT/cdbovrvw.htm#CNCPT89234/ "Title") inline link.
+
