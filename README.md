@@ -242,3 +242,16 @@
 | RECO. Recover Process |Solo para entornos distribuidos. Recupera transacciones distribuidas incorrectas |
 | LREG (Listener Registration) | Registra información de la instancia y los prcesos dispatcher con el Listener |
 | ARCn (Archiver) | Copua los redo log online a redo log archivados |
+
+
+# FICHEROS
+
+|TIPO FICHERO|DESCRIPCIÓN|
+|--------------------|--------------------|
+|CONTROL|Información sobre la base de atos y su estructura|
+|DATOS| Ficheros que almacenan los datos de las aplicaciones|
+|Redo Log Online|Permiten el recovery de la Base de datos en caso de caída. Contiene las transacciones que se van generando|
+|Redo Log archivados|Histórico de las transacciones de la Base de datos. Usados para Recovery|
+|Parameter file|Fichero de parámetro de la Base de datos|
+|Backup|Ficheros de copia de seguridad|
+|Traza y alert|Ficheros de traza y log de la Base de datos|
