@@ -82,7 +82,9 @@
 
 
 # ¿Qué es la OFA?
-#### Es un estándar de cómo se deben instalar las aplicaciones de Oracle en una computadora o servidor. De esta forma, se puede:
+#### Es un estándar de cómo se deben instalar las aplicaciones de Oracle en una computadora o servidor.
+
+####  De esta forma, se puede:
 
 + Organizar grandes cantidades de datos y software en el disco para mantener un orden y para evitar cuellos de botella.
 + Facilitar tareas administrativas sobre la misma información, como respaldos.
@@ -104,6 +106,9 @@
 + Separa información administrativa para cada base de datos. De ésta forma, se gana mucha ventaja al administrar las bases de datos.
 + Usa nombres de archivos de base de datos consistentes. Los archivos de la base de datos deben tener nombres adecuados que los distingan de otro tipo de archivos y al mismo tiempo, saber a qué base de datos y tablespace pertenecen. Los control files, redo log files y data files, se identifican de manera fácil.
 + Separación de contenido de tablespaces. El contenido de los tablespaces, es separado para minimizar la fragmentación y la contención de I/O, así como maximizar la administración de los mismos.
+
+
+![Descripcion]: https://orlandoolguin.wordpress.com/2010/08/23/que-es-la-ofa/#:~:text=Como%20ya%20lo%20coment%C3%A9%20en,para%20evitar%20cuellos%20de%20botella. datos del OFA.
 
 # 
 
