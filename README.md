@@ -226,3 +226,26 @@
 |SORT AREA      | HASH AREA     | 
 |---------------|---------------|
 |BITMAP AREAS   | DATOS SESION Y CURSORES|
+
+
+
+
+# procesos de ORACLE
+
+| PROCESO BACKGROUND | DESCRIPCIÓN |
+|--------------------|--------------|
+|DBWn- Database Writer Process| Encargado de escribir el contenido de los buffers en los datafiles. Los
+procesos DBWn son los responsables de escribir los buffers modificados
+(dirty) en la cache de buffer a disco.|
+|LGWR- Log Writer Process | Este proceso es que se encarga de escribir el contenido del búfer de Redo
+Log en los ficheros de Redo Log Online.|
+| CKPT- Checkpoint Process | Almacena información de los checkpoint en el fichero de control y en la
+cabecera de los archivos de datos |
+| SMON (System Monitor) | Se encarga del recovery de la instancia en el arranque y de limipar
+segmentos temporales y no utilizados |
+| PMON (Process Monitor) | Se encarga del recovery de un proceso al fallar. Motnitoriza sesiones, limpia
+la buffer cache y libera recursos |
+| RECO. Recover Process |Solo para entornos distribuidos. Recupera transacciones distribuidas
+incorrectas |
+| LREG (Listener Registration) | Registra información de la instancia y los prcesos dispatcher con el Listener |
+| ARCn (Archiver) | Copua los redo log online a redo log archivados |
