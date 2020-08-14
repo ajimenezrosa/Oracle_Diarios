@@ -192,40 +192,40 @@
 ![structura oracle 1](https://adminbasedatosudla.files.wordpress.com/2014/10/arqoracle.png)
 
 
-# STANDALONE
+### STANDALONE
 
 ![](https://www.oracle.com/technetwork/es/images/clientfailover-standbydatabases-05-2660845.png)
 
 
-# RAC REAL APPLICATION CLUSTER
+### RAC REAL APPLICATION CLUSTER
 ![](https://nageshbattula.files.wordpress.com/2018/08/racsharding.png?w=485)
 
 
 
 
-# SGA (SYSTEM GLOBAL AREA)
+### SGA (SYSTEM GLOBAL AREA)
 
 ![](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMsJ35LO2ODZFI8kM2uAPU_k0A-818RPMwVJ-FRdCSoHM7cak&s)
 
 ![](https://upload.wikimedia.org/wikipedia/commons/f/f4/Sga_proceso.png)
 
-# SHARED POOL
+### SHARED POOL
 ![](https://1.bp.blogspot.com/-5wkKVDPyHPs/TZQbR2BLusI/AAAAAAAAADA/MGpeeCGpllw/s1600/Instance.jpg)
 
 
 
 
 
-# DATABASE BUFFER CACHE
+### DATABASE BUFFER CACHE
 
 |               |               |
 |---------------|---------------|
 | KEEP POOL     |  RECLICLE POOL|
 | BUFFER CACHE 1|  BUFFER CACHE2|
 
-#
+# 
 
-# PGA (PROGRAM GLOBAL AREA)
+### PGA (PROGRAM GLOBAL AREA)
 |SORT AREA      | HASH AREA     | 
 |---------------|---------------|
 |BITMAP AREAS   | DATOS SESION Y CURSORES|
@@ -233,7 +233,7 @@
 
 
 
-# procesos de ORACLE
+### procesos de ORACLE
 
 | PROCESO BACKGROUND | DESCRIPCIÓN |
 |--------------------|--------------|
@@ -247,7 +247,7 @@
 | ARCn (Archiver) | Copua los redo log online a redo log archivados |
 
 
-# FICHEROS
+### FICHEROS
 
 |TIPO FICHERO|DESCRIPCIÓN|
 |--------------------|--------------------|
@@ -261,9 +261,9 @@
 
 # 
 
-# MULTITENANT
+### MULTITENANT
 
-### Oracle Multitenant es la arquitectura de la nube de base de datos de la nueva generación. Ofrece aislamiento, agilidad y economías de escala. Una base de datos de contenedor multiempresa puede contener muchas bases de datos de tipo "pluggable". Una base de datos existente puede simplemente adoptarse sin que se requieran cambios en la aplicación. Oracle Multitenant complementa totalmente otras opciones, incluidos Oracle Real Application Clusters y Oracle Active Data Guard.
+##### Oracle Multitenant es la arquitectura de la nube de base de datos de la nueva generación. Ofrece aislamiento, agilidad y economías de escala. Una base de datos de contenedor multiempresa puede contener muchas bases de datos de tipo "pluggable". Una base de datos existente puede simplemente adoptarse sin que se requieran cambios en la aplicación. Oracle Multitenant complementa totalmente otras opciones, incluidos Oracle Real Application Clusters y Oracle Active Data Guard.
 
 ![](https://1.bp.blogspot.com/-RioWC28x8_M/U3gHLHwigmI/AAAAAAAADhw/sto69JfXkiQ/s1600/3.jpg)
 
@@ -276,3 +276,141 @@
 
  [Database Concepts / 17 Introduction to the Multitenant Architecture](https://docs.oracle.com/database/121/CNCPT/cdbovrvw.htm#CNCPT89234/ "Title") inline link.
 
+
+
+# Creación de Bases de Datos
+
+### Creacion de Bases de datos Simples DBCA
+### Creación de una base de datos Oracle
+##### Después de verificar la instalación y la configuración de Oracle Database, cree las bases de datos Oracle que necesite.
+
++ Si utiliza Oracle Database sin bases de datos en spera, siga el procedimiento Cómo crear una base de datos primaria de Oracle. Este procedimiento no es necesario para las bases de datos adicionales que puede crear y configurar.
+
++ Si utiliza Oracle Data Guard, cree las siguientes instancias de base de datos:
+
+    + Instancia de base de datos primaria. Para obtener instrucciones sobre cómo crear una base de datos primaria, consulte Cómo crear una base de datos primaria de Oracle.
+
+    + Instancia de base de datos en espera. Una instancia de base de datos en espera puede ser una instancia de base de datos física en espera o una instancia de base de datos lógica en espera. Para obtener instrucciones sobre cómo crear instancias de base de datos en espera, consulte la documentación de Oracle Database.
+
+##### Cómo crear una base de datos primaria de Oracle
+1-  **Prepare los archivos de configuración de base de datos.**
+###### Coloque todos los archivos de la base de datos (archivos de datos, archivos de registro de rehacer y archivos de control) en los dispositivos globales sin formato compartidos o en el sistema de archivos del cluster. Consulte Preparación de los nodos y los discos para obtener información sobre las ubicaciones de instalación.
+
+**Nota** - Si la base de datos se encuentra en la zona no global, no coloque los archivos relacionados con la base de datos en los dispositivos sin formato compartidos.
+#
+En los archivos  ***init$ORACLE_SID.ora o config$ORACLE_SID.ora***, es posible que necesite modificar las asignaciones para control_files y background_dump_dest con el fin de especificar las ubicaciones de los archivos de control y los archivos de alerta.
+# 
+
+**Nota** - Si utiliza la autenticación de Solaris para inicios de sesión de base de datos, defina la variable remote_os_authent del archivo ***init$ORACLE_SID.ora*** en True.
+
+2- **Inicie la creación de la base de datos mediante una utilidad de la siguiente lista:**
+
+ + El instalador de Oracle
+ + El comando sqlplus(1M) de Oracle
+ + El asistente de configuración de bases de datos de Oracle
+
+Durante el proceso de creación, compruebe que todos los archivos de la base de datos estén en la ubicación adecuada, ya sea en los dispositivos globales compartidos, en el sistema de archivos del cluster o en un sistema de archivos local de alta disponibilidad.
+
+3. **Compruebe que los nombres de los archivos de control coincidan con los de los archivos de configuración.**
+4. **Cree la vista** ***v$sysstat.***
+
+Ejecute las secuencias de comandos de catálogos que crean la vista ***v$sysstat.*** El supervisor de fallos de HA para Oracle utiliza esta vista. Para obtener más información, consulte la documentación de Oracle Database.
+
+Pasos siguientes
+
+Cuando haya completado los pasos indicados en esta sección, vaya a Configuración de permisos de base de datos de Oracle.
+
+#### Configuración de permisos de base de datos de Oracle
+Precaución - No realice los pasos de esta sección para una base de datos física en espera de Oracle Database.
+
+Siga el procedimiento de esta sección para definir los permisos de base de datos para una base de datos Oracle primaria o una base de datos Oracle lógica en espera.
+
+
+#### Cómo definir permisos de bases de datos Oracle
+###### Permita el acceso para el usuario y la contraseña que se utilizarán para la supervisión de fallos.
+###### Para utilizar el método de autenticación de Oracle Database, otorgue a este usuario autoridad en la vista v_$sysstat y en la vista v_$archive_dest.
+~~~sql
+# sqlplus  "/ as sysdba"
+sql>    create user user identified by passwd;
+sql>    alter user user default tablespace system quota 1m on system;
+sql>    grant select on v_$sysstat to user;
+sql>    grant select on v_$archive_dest to user;
+sql>    grant select on v_$database to user;
+sql>    grant create session to user;
+sql>    grant create table to user;
+sql>    create profile profile limit PASSWORD_LIFE_TIME UNLIMITED;
+sql>    alter user user identified by passwd profile profile;
+
+sql>    exit;
+#
+~~~
+Puede usar este método para todas las versiones de Oracle Database admitidas.
+
++ Para utilizar el método de autenticación de Solaris, aplique los pasos que se describen a continuación:
+    + Confirme que el parámetro remote_os_authent esté definido en TRUE
+
+~~~sql
+# sqlplus  "/ as sysdba"
+sql> show parameter remote_os_authent
+
+NAME                       TYPE        VALUE
+---------------------- ----------- ---------------
+remote_os_authent         boolean     TRUE
+~~~
+
+ + Determine el valor del parámetro os_authent_prefix.
+ ~~~sql
+sql>  show parameter os_authent_prefix
+
+NAME                       TYPE        VALUE
+---------------------- ----------- ---------------
+os_authent_prefix         string      ops$
+ ~~~
+# 
++ Otorgue a la base de datos el permiso para utilizar la autenticación de Oracle Solaris
+
+~~~sql
+sql> create user prefix user identified by externally default 
+tablespace system quota 1m on system;
+sql> grant connect, resource to prefix user;
+sql> grant select on v_$sysstat to prefix user;
+sql> grant select on v_$archive_dest to prefix user;
+sql> grant select on v_$database to prefix user;
+sql> grant create session to prefix user;
+sql> grant create table to prefix user;
+sql> exit;
+#
+~~~
+
+##### Los elementos reemplazables de estos comandos son los siguientes:
+
+
++ prefix es el valor del parámetro os_authent_prefix. El valor predeterminado de este parámetro es ops$.
+user es el usuario para el que está activando la autenticación de Oracle Solaris. Asegúrese de que el usuario tenga los archivos en el directorio ***$ORACLE_HOME.***
+# 
+**Nota** - No agregue ningún espacio entre ***prefix y user.***
+
+2. **Configure NET8 para el software Oracle Solaris Cluster.**
+
+El archivo listener.ora debe ser accesible desde todos los nodos o zonas del cluster. Coloque los archivos en el sistema de archivos de cluster o en el sistema de archivos local de cada uno de los nodos o cada una de las zonas donde podrían ejecutarse los recursos de Oracle Database.
+
+# 
+***Nota*** - Si coloca el archivo listener.ora en una ubicación que no sea el directorio /var/opt/oracle o el directorio $ORACLE_HOME/network/admin, debe especificar la variable TNS_ADMIN o una variable de Oracle Database equivalente en un archivo de entorno de usuario. Para obtener información sobre las variables de Oracle Database, consulte la documentación de Oracle Database.
+
+También debe ejecutar el comando clresource(1CL) para definir el parámetro de extensión de recurso User_env, que proporciona el archivo de entorno de usuario. Consulte Propiedades de extensión de SUNW.oracle_listener o Propiedades de extensión SUNW.oracle_server para obtener detalles sobre formato.
+
+# 
+
+HA para Oracle no impone ninguna restricción en el nombre del listener; puede ser cualquier nombre de listener de Oracle Database que sea válido.
+
+El siguiente ejemplo de código identifica las líneas de listener.ora que se actualizan.
+
+
+
+### Ficheros y directorios creados
+
+### Procesos y memoria
+
+### Uso de DBCA en modo avanzado. Crear Bases de Datos
+
+### Configuracion de Variables de Entorno
