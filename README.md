@@ -462,7 +462,7 @@ en este caso me coloca el **gedit** como editor por defecto.
 # Administracion Basica de la Base de Datos.
 
 ## Arranque y Parada 
-
+![](https://ittutorial.org/wp-content/uploads/2019/02/img_5c751e8c40812.png)
 ### Faces del aranque de una base de datos ORACLE.
 
 |Faces de Startup [Arranque]|
@@ -589,3 +589,80 @@ SI necesita recuperacion al arrancar la base de datos.
 ~~~sql
 SQLPLUS> connect sys as sysdba connected SQLPLUS> shutdown abort
 ~~~ 
+
+
+# 
+# Pruebas con los modos de la DB
+
+### Arrancar la Base de datos. Comando STARTUP
+
+parar la base de datos de forma immediata
+~~~sql
+SQL> shutdown immediate
+~~~
+
+
+#### la forma mas estandar para arrancar una base de datos es el comando.
+~~~sql
+SQL> startup
+~~~
+
+
+#### para arrancar la base de datos en un modo concreto.  Por ejemplo en modo nomoun
+
+#### Ejecutaremos el siguiente comando
+~~~sql
+SQL> startup nomount
+~~~
+
+en este modo podemos mostrar el proceso pmon.
+~~~linux
+px -ef | grop pmon
+~~~
+
+#### Generalmente cargamos el modo ***nomount*** para solucionar algun problema. por ejemplo se estropeo un archivo o fichero y queremos recuperarlo.
+
+#### para pasar del modo ***nomount*** al modo ***mount*** podemos hacerlo de la siguiente manera.
+~~~sql
+SQL> ALTER DATABASE MOUNT;
+~~~
+
+
+#### Para pasar a la fecha de ***Abierto*** ejecutaremos el comando:
+~~~sql
+ALTER DATABASE OPEN;
+~~~
+
+## Parar la Base de Datos. Introducción
+
+| Modo de Parar La DB |   Descripcion e implicaciones|
+|-----------------|-----------------------|
+|NORMAL        | Finalizacion normal de la Base de Datos. Espera a que los usuarios terminen la session antes de cerrar del todo|
+|IMMEDIATE  | Termina todas las transacciones pendientes y cierra la Base de Datos.|
+|TRASACTIONAL | Espera a que terminen las transacciones en marcha , pero no permite que comience ninguna nueva |
+| ABORT  | no espera a nada. Solo deberia usarse en casos excepcionales |
+
+
+### Ejercicios con paradas de Bases de Datos oracle
+![](https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQjm6dWDW8F3U5VLZFnziBfOpEmrvxnk_xUEw&usqp=CAU)
+~~~sql
+shutdown transactional
+~~~
+##### de existir transacciones abiertas la base de datos termina dichas transacciones y luego hace el SHUTDOWN
+~~~sql
+shutdown IMMEDIATE;
+~~~
+##### de existir transacciones abiertas la base de datos cierra todas las transacciones sin hacer commit.
+
+~~~SQL
+SHUTDOWN ABORT
+~~~
+#### esto es como apagar el servidor o desconectarle la energia. para tales fines la la base de datos se detendra sin importar si tiene transacciones o no pendientes.  
+#### ***Nota*** esto solo debe utilizarce en casos de EMERGENCIA.
+
+# 
+
+## Poner la Base de datos en modo Administrador (QUIESCE)
+
+Este modo se utiliza para colocar la base de Datos en modo ***QUIESCE***  esto para poder realizar algunas tareas de administracion.
+
