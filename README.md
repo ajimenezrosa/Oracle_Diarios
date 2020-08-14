@@ -414,3 +414,178 @@ El siguiente ejemplo de código identifica las líneas de listener.ora que se ac
 ### Uso de DBCA en modo avanzado. Crear Bases de Datos
 
 ### Configuracion de Variables de Entorno
+
+# 
+# 
+
+# SQL*Plus. Herramienta de administración
+### SqlPlus
+
+**SQLPlus** es un programa de línea de comandos de Oracle que puede ejecutar comandos ***SQL y PL/SQL*** de forma interactiva o mediante un script. ... Los programadores y los administradores de bases de datos (DBA's) lo usan de forma muy común como interfaz fundamental en la mayoría de las instalaciones de software de Oracle.
+
+
+### Manuales de SqlPlus..
+
+ [Manual de Iniciación a Oracle](https://www.mundoracle.com/entorno-sql-plus.html?Pg=sql_plsql_10.htm/ "Title") inline link.
+#
+
+
+### Algunos Comandos Utiles de SqlPlus.
+
+~~~sql
+~~~
+
+~~~sql
+SELECT SYSDATE FROM DUAL;
+~~~
+
++ L muestra comando almacenado en memria
++ R ejecuta lo que esta en memoria
+
++ si coloco un numero por ejemplo 2 , me muestra la linea 2.
++ pudeo hacer cambios con esto por ejemplo si coloco 2 * , me cambia la linea 2 por un *
++ otra forma es C .SYSDATE.*. Lo que hacemos aqui es sustituir SYSDATE por *
++ Del 2 , nos borra la linea 2 del comando almacenado en memoria.
+
+Otra forma es lanzar un comando para trabajar con un editor **ed** carga un editor en el cual podemos trabjar la linea de comandos.
+
+Si quiero cambiar el editor por defecto del **ed** puedo usar el siguiente comando
+~~~linux
+SQL> def_editor=gedit
+~~~
+en este caso me coloca el **gedit** como editor por defecto.  
+
+
+
+
+
+# Administracion Basica de la Base de Datos.
+
+## Arranque y Parada 
+
+### Faces del aranque de una base de datos ORACLE.
+
+|Faces de Startup [Arranque]|
+|---------------------------|
+|PARADA |
+|NOMOUNT|
+|MOUNT  |
+|ABIERTA|
+
+~~~plsql
+~~~
+
+### Arranque y parada de una base de datos Oracle
+
+## 1. Objetivos
+
+Explicar brevemente los diferentes métodos para parar y arrancar una base de datos ORACLE.
+
+## 2. Arrancar base de datos
+
+El arranque de una base de datos ORACLE requiere tres etapas
+1. Arrancar la instancia
+2. Montar la base de datos
+3. Abrir la base de datos
+
++ **Arrancar la base de datos**
+
+En esta parte del arranque se generan los procesos background.
+
+Se crea la SGA. Sus dimensiones se basan en el fichero de inicialización «init.ora».
+
+SQLPLUS> connect sys as sysdba connected SQLPLUS> startup nomount Oracle Instance started
+
++ Montar la base de datos
+
+En esta parte del proceso de arranque se produce la conexión al/los archivo/s de control.
+
+
+En este estado se puede:
+
++  Cambiar el modo de archivado de la B.D.
++ Renombrado de archivos de Redo Log o del asociado al tablespace SYSTEM
++ Crear, modificar o suprimir nuevos Redo Log o grupos de Redo Log
+
+Partiendo del anterior estado ( nomount ), montamos la base de datos de la siguiente forma:
+~~~sql
+SQLPLUS> alter database mount database mounted
+~~~
+En caso de que queramos iniciar la base de datos en este estado bastaría con hacer lo siguiente:
+~~~sql
+SQLPLUS> connect sys as sysdba connected 
+SQLPLUS> startup mount Oracle Instance started Database mounted
+~~~    
++ ***Abrir base de datos***
+
+En esta parte de proceso abren todos los ficheros asociados a los tablespaces y los ficheros de Redo Log.
+
+La B.D. está accesible para todos los usuarios
+
+Si es necesaria una recuperación (por un fallo de luz o CPU), se produce en este momento.
+
+Partiendo del anterio estando ( mount ), abrimos la base de datos de la siguiente forma:
+~~~sql
+SQLPLUS> alter database open database opened
+~~~
+
+En caso de que queramos iniciar la base de datos en este estado bastaría con hacer lo siguiente:
+
+~~~sql
+SQLPLUS> connect sys as sysdba connected 
+SQLPLUS> startup Oracle Instance started Database opened
+~~~ 
+## 3. Más alternativas para el arranque de base de datos
+Arranque solo para usuarios con el privilegio RESTRICTED SESSION
+~~~sql
+SQLPLUS> startup restrict
+~~~
+
+Arranque forzado
+~~~sql
+SQLPLUS> startup force
+~~~
+
+Arranque con un fichero de parámetros distinto al habitual o localizado en una situación diferente a donde se encuentra por defecto
+~~~sql
+SQLPLUS> startup pfile=/oracle/database/init2.ora
+~~~ 
+
+## 4. Parada base de datos
+La parada de una B.D. Oracle se realiza mediante el comando SHUTDOWN desde SQL*DBA después de haber establecido una conexión como SYS AS SYSDBA
+
+Existen tres tipos de shutdown:
+1. shutdown normal
+2. shutdown immediate
+3. shutdown abort
+    + ***Shutdown normal***
+
+Espera a que los usuarios conectados actualmente finalicen TODAS las operaciones.
+Evita nuevas conexiones. Los usuarios que intentan conectarse reciben el mensaje «Shutdown in progress».
+Cierra y desmonta la B.D. Cierra la SGA para los procesos background.
+No necesita recuperacion al arrancar la base de datos.
+~~~sql
+SQLPLUS> connect sys as sysdba connected SQLPLUS> shutdown normal
+~~~
+ 
+
++ ***Shutdown immediate***
+
+Espera a que las transacciones actuales se completen.
+Evita nuevas transacciones y nuevas conexiones. Los usuarios que intentan conectarse o los que ya están conectados al intentar realizar una nueva transacción reciben el mensaje «Shutdown in progress».
+El proceso PMON finaliza las sesiones no activas y realiza ROLLBACK de aquellas transacciones que no estén validadas.
+Cierra y desmonta la B.D. Cierra la SGA para los procesos background.
+No necesita recuperacion al arrancar la base de datos.
+~~~sql
+SQLPLUS> connect sys as sysdba connected SQLPLUS> shutdown immediate
+~~~ 
+
++ ***Shutdown abort***
+
+Parada drástica, no espera a que los usuarios conectados actualmente finalicen sus transacciones. El usuario conectado recibe el mensaje «No logged on».
+No se realiza ROLLBACK de las transacciones pendientes.
+El proceso PMON finaliza las sesiones no activas y realiza ROLLBACK de aquellas transacciones que no estén validadas.
+SI necesita recuperacion al arrancar la base de datos.
+~~~sql
+SQLPLUS> connect sys as sysdba connected SQLPLUS> shutdown abort
+~~~ 
