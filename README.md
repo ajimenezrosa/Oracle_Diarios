@@ -666,3 +666,43 @@ SHUTDOWN ABORT
 
 Este modo se utiliza para colocar la base de Datos en modo ***QUIESCE***  esto para poder realizar algunas tareas de administracion.
 
+
+#### Crear un usuario en oracle usando sqlplus.
+
+~~~sql
+SQL>CREATE USER USER1 IDENTIFIED BY usu1;
+SQL>GRANT CONNECT, RESOURCE TO USU1;
+~~~
+
+Colocar base de datos en modo QUIESCE
+Este seria un modo administrativo en el cual solo puede entrar el administrador de la base de datos.
+
+Esto se utiliza generalmente para realizar tareas de mantenimiento de las bases de datos.
+
+~~~sql
+SQL>ALTER SYSTEM QUIESCE RESTRICTED;
+~~~
+
+para regresar la base de datos a modo normal utilizaremos los siguientes comandos.
+
+~~~sql
+SQL>ALTER SYSTEM UNQUIESCE;
+~~~
+
+***Nota***
+Es necesario decir que todas las conecciones a la base de datos que no sean de usuarios administradores estaran inhabilitadas. 
+
+##  Diccionario de Datos: Tablas y Vistas
+![Diccionario de Datos: Tablas y Vistas](https://slideplayer.es/slide/3613109/12/images/4/Oracle+Database%3A+Conceptos+Fundamentales+de+SQL+II+3-4.jpg)
+
+
+### Que es un diccionario de datos.
+    un conjuto de tablas que contiene toda la informacion de metadatos de la base de datos.
+
+|Diccionario de Datos|
+|----------------------|
+|Un conjunto de tablas de solo lectura que proporcionan informacion sobre la base de datos.|
+|Un diccionario de datos Contiene|
+|       -La definicion de cada objetivode la tabla de datos|
+|       -la Cantidad de espacio asignado y utilizado actualmente por los objetos|
+|       -Datos de seguridad, como los hombres de los usuarios, privilegios y roles concedidos a los usuarios|
