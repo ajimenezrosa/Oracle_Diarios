@@ -696,7 +696,7 @@ Es necesario decir que todas las conecciones a la base de datos que no sean de u
 ![Diccionario de Datos: Tablas y Vistas](https://slideplayer.es/slide/3613109/12/images/4/Oracle+Database%3A+Conceptos+Fundamentales+de+SQL+II+3-4.jpg)
 
 
-### Que es un diccionario de datos.
+# Que es un diccionario de datos.
     un conjuto de tablas que contiene toda la informacion de metadatos de la base de datos.
 
 |Diccionario de Datos|
@@ -706,3 +706,40 @@ Es necesario decir que todas las conecciones a la base de datos que no sean de u
 |       -La definicion de cada objetivode la tabla de datos|
 |       -la Cantidad de espacio asignado y utilizado actualmente por los objetos|
 |       -Datos de seguridad, como los hombres de los usuarios, privilegios y roles concedidos a los usuarios|
+
+# 
+# 
+
+
+## Tablas Basicas
+#### Estas almacenan informacion sobre la base de datos.  Solo Oracle puede escribir y leer estas tablas.  Los usuarios rara vez acceden a las tablas base directamente porque estan nomalizadas y la mayoria de los datos se almacenan en un formato criptico.
+
+Mi conseje es que se vea estas tablas solo bajo soporte del personal de ORACLE Diretamente.
+
+
+### Vistas
+Permiten ver la informacion de las tablas Base de una forma legible para los Administradores o Desarrolladores. Algunas vistas son accesibles para todos los usuarios de la base de datos, miemtras que otras estan destinadas a los administradores.
+
+
+la mayoria de las vistas de administracion inician de la siguiente manera.
+
+|Prefijo | Usuarios  | Contenido | Descripcion   |
+|------------|-----------|----------|------------------|
+|DBA_   | Administradores de base de datos | Todos los Objetos | Algunas vistas DBA_ columnas adicionales que contienen informacion util para el administrador|
+|ALL_   | Todos los Usuarios | Objetos a los que el usuario tiene privilegios| Son Tanto los suyos como los de otros usuarios que le han dada permisos|
+|USER_  | Todos los usuarios | Objetos propiedad del usuario | La Lista con el prefijo USER_  normalmente excluyen la columna PROPIETARIO. Esta columna esta implicita para que sea el usuario que emite la columna. |
+
+
+
+### Vistas dinamicas (Performance Views)
+
+|Vistas dinamicas (Performance Views)|
+|------------------------------------|
+|Son vistas que nos permiten comprobar la informacion y comportamiento de la  base de datos en tiempo real y dinamico|
+|Estas vistas son dinamicas porque se actualizan continuamente con la informacion de la base de datos|
+|Estas Vistas a veces reciben el nombre de vistas V$ por que sus nombres comienzan con V$ |
+
+
+
+
+
