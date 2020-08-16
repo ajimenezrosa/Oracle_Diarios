@@ -741,6 +741,18 @@ la mayoria de las vistas de administracion inician de la siguiente manera.
 
 
 
+# 
+# 
+# 
+
+
+#  QUERYS DE ADMINISTRACION _ COLOCADOS AL FINAL---
+
+#
+# 
+
+
+
 # Definición SQL
 #### SQL (Lenguaje de consulta estructurado) es un lenguaje declarativo de acceso a bases de datos relacionales que permite especificar diversos tipos de operaciones en éstas. Una de sus características es el manejo del álgebra y el cálculo relacional permitiendo efectuar consultas con el fin de recuperar, de una forma relativamente sencilla, información de interés de una base de datos, así como también hacer cambios sobre ella. Es un lenguaje de cuarta generación (4GL).
 
