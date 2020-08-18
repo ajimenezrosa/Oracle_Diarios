@@ -857,7 +857,24 @@ En geodatabases almacenadas en una base de datos de Oracle, los pares de cadenas
 + Habilitar las palabras clave para los usuarios en la interfaz de ArcGIS.
 + Proporcionar comentarios que describan la palabra clave de configuración.
 
+#### Las combinaciones Palabra clave/Parameter_name son únicas. Por ejemplo, no podría tener el mismo parámetro definido bajo la misma palabra clave, tal y como se muestra aquí:
 
+|KEYWORD    |   PARAMETER_NAME     |     CONFIG_STRING|
+|-----------|----------------------|------------------|
+|DEFAULTS  |   RASTER_STORAGE      |    BLOB   |
+|DEFAULTS  |     RASTER_STORAGE    |   SDO_GEOMETRY|
+
+Sin embargo, la mayoría de parámetros pueden utilizarse bajo varias palabras clave de configuración distintas. Por ejemplo, el parámetro RASTER_STORAGE aparece también agrupado con varias otras palabras clave. En este ejemplo, verá que se incluye en la palabra clave SDELOB.
+
+~~~sql
+SQL>  SELECT * FROM SDE.DBTUNE
+  2  WHERE KEYWORD = 'SDELOB';
+~~~  
+|KEYWORD | PARAMETER_NAME   |   CONFIG_STRING|
+|--------|------------------|----------------|
+|SDELOB  | ATTRIBUTE_BINARY |  BLOB         |
+|SDELOB  | GEOMETRY_STORAGE |  SDELOB       |
+|SDELOB  | RASTER_STORAGE   |  BLOB         |
 
 
 # 
@@ -1199,4 +1216,42 @@ select name, value
 from v$parameter
 where name like 'audit_trail'
 ~~~
+
+ [Parámetros de configuración de Oracle](https://desktop.arcgis.com/es/arcmap/10.3/manage-data/gdbs-in-oracle/configuration-parameters-oracle.htm#:~:text=Los%20par%C3%A1metros%20de%20configuraci%C3%B3n%20identifican,de%20la%20base%20de%20datos./ "Title") inline link.
+
+
+# Fichero de parámetros SPFILE
+![](https://donhk.files.wordpress.com/2019/02/image-7.png)
+
+#### En esta direccion debe haber un archivo con el nombre de la base de datos .ora , lo pasa en realidad es que al Iniciar la base de datos el ***ORACLE*** busca en esta direccion un archivo con eso nombre y lo carga.
+
+#### Hasta la version numero 8 de **ORACLE** todo esto estaba en init.ora.   Este es un archivo de texto , se puede modificar utilizando un editor.  Que pasa con este!!
+#### Bueno si haciendo la modificacion yo cometo un error esto podria probocar que la base de datos no arranque.  Por esto ***ORACLE***  incorporo los archivos ***spfile*** , estos deben ser modificados por linea de comando, minimizando asi el margen de error en los mismos.
+
+# 
+
+#### es bueno senalas que todos los parametros que inician con:
+ 
++ __ ***NO SE TOCAN*** Estos son parametros internos de la base de datos  y salvo que el personal de **ORACLE**  me pida que los toque no deben ser tocados.
++ El * me indica que si hay mas de una Instancia en la base de datos , esto vale para todas las instancias.
++ Aunque vez una **300 o 400** parametros existen unos ***30 o 40 paramatros llamados parametros basicos*** que son los que se suelen tocar.
+
+![](https://hetmanrecovery.com/es/pic/blog/a27/notepad.png)
+
+# 
+#  Niveles de los parámetros
+
+#### Anteriormente vimos la vista v$parameter, pero existe otra vista llamada v$spparameter
+
+esta vista muestra los valores que tienen estos parametros dentro del fichero de parametros.
+
+### la V$PARAMETER me muestra el valor actual del parametro
+![](https://image.slidesharecdn.com/less04databaseinstance-130111040459-phpapp02/95/less04-database-instance-16-638.jpg?cb=1357877155)
+### la V$SPPARAMETER me muestra el valor original del parametro.
+![](https://lh3.googleusercontent.com/proxy/_3aZsR6UyPjRQMLgx8-Z9FAU54jj5LYAx5JdBwnGhi5pF1D6YwlOqfgekJ2wx7cf6hcCI3kuchbln-pH)
+
+### Tenemos tambien la vista V$SYSTEM_PARAMETER
+    Esta vista me muestra los valores que estan cargados en toda la instancia.
+
+
 
