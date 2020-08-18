@@ -740,6 +740,125 @@ la mayoria de las vistas de administracion inician de la siguiente manera.
 |Estas Vistas a veces reciben el nombre de vistas V$ por que sus nombres comienzan con V$ |
 
 
+# 
+
+## V$FIXED_TABLE. Encontrar informacion de Vistas y Tablas dinámicas
+
+#### Hacer un listado de las vistas que nos traen informacion del sistema en ORACLE.
+
+~~~SQL
+SQL>SELECT * FROM v$FIXED_TABLE;
+~~~
+#### con esto me aparecen todas las tablas del diccionario de datos. del sistema.
+el numero de  tablas o vistas de administracion vaira de version en viersion de ORACLE.  por esto es importante que entre cambio de versions revisemos nuestros scripts de administracion pues muchas tablas pueden varirar.
+
+#### al ejecutar el select de las vistas en SQLPLUS veremos que la muchos nombres de las vistas son muy largos.  es posible que sea un poco dificil leerlos.
+
+ utilizaremos una instruccion para esto que nos permite formatear una columna 
+~~~sql
+SQL>COL NAME FORMAT A40
+~~~
+ Para los que no estan familiazados con **sqlplus** esto nos formatea la columna **NAME** a solo 40 caracteres.
+
+si ejectuas el comando ***run*** veras que las columnas salen en un formato mas legibles.
+
+Tambien es posible que quiera paginar mi **select** pues al realizar la instruccion solo veo las ultimas lineas del query resultante. Para paginar el resutltado colocare la siguiente instruccion.
+~~~sql
+SQL> SET PAUSE ON
+~~~
+
+## resultados del query.
+
+## Las tablas X$
+![](https://img2018.cnblogs.com/blog/1435518/201902/1435518-20190227145527683-1776936647.png)
+
+para empesar , todo lo que inicia con X$ son tablas del sistema.  No se tocan
+No se puedenn moficiar , son de tipo READONLY y casi nunca se utilizan.
+
+***Nota*** estas tablas solo debe actualizarlas y/o modificarlas el propio ***ORACLE***
+
+## Las Tablas V$
+![](https://selimkaratas.com.tr/wp/wp-content/uploads/2014/03/CropperCapture473.png)]
+
+Aqui ya podemos ver que los nombres de las tablas tienen un sentido con relacion al mundo de **ORACLE**
+Como puedes notar por cada tabla V$ existe una tabla GV$  con el mismo nombre.  esto es porque para las V$ nos muestra las informaciones de la base de datos **ORACLE** que tenemos montada en este momento diremos la Normal o ***Stand Alone***. Pero como sabes podemos tener un **CLUSTER** de bases de datos montado.  La informacion de este ***CLUSTER*** la podriamos sacar de las tablas GV$. Si tenemos N bases de datos montadas en ese ***CLUSTER*** tendremos la informacion todas ellas en la GV$.
+
+
+Un ejemplo de uso que le podriamos dar a V$fixed_table
+es el siguiente.
+
+me es necesario hacer un query de las vistas de las que en su nombre tienen la palabra ***MEMORY*** 
+~~~sql
+SQL> Select * from V$FIXED_TABLE where name like 'V$%MEMORY%'
+~~~
+### Haremos un ejemplo de como podemos encontrar informacion de **SGA** utilizando las V$
+
+Podriamos usar un comando de sustitucion ya utilizado anteriormente por nosotros.
+~~~sql
+SQL> l
+    1* SELECT * FROM V$FIXED_TABLE WHERE NAME LIKE 'V$%MEMORY%'    
+SQL> C .MEMORY.SGA.
+    1* SELECT * FROM V$FIXED_TABLE WHERE NAME LIKE 'V$%SGA%'
+SQL>
+~~~ 
+
+
+Tenemos una vista muy basica que nos da la informacion de como esta dividad ahoramismo nuestra SGA.
+~~~SQL
+SQL> SELECT * FROM V$SGA;
+~~~
+![](https://image.slidesharecdn.com/adb-inmemory-presentation-170129174432/95/oracle-database-inmemory-13-638.jpg?cb=1485712157)
+
+### Recordemos que tenemos un comando show sga
+![](https://3.bp.blogspot.com/-tWTILFqzWlY/UimApeGdBwI/AAAAAAAABNE/iJ061t5-6wU/s1600/1.png)
+
+Esto no es mas que una especie de Atajo que nos muestra la informacion del comando anterior **SELECT * FROM V$SGA**
+
+### Si quiere ser mas concreto sobre lo que tengo en la ***SGA*** debo usar la tabla ***V$sgainfo
+
+![](https://slideplayer.com/slide/4363854/14/images/26/select+%2A+from+v%24sgainfo.jpg)
+
+### Tenemos tambien la tabla ***V$SGASTAT
+
+![](https://slideplayer.com/slide/4363854/14/images/27/select+%2A+from+v%24sgastat+order+by+bytes+desc.jpg)
+
+# 
+#  Parámetros de la Base de datos
+correspondientes a estos identifican el modo de almacenamiento del objeto dentro de la base de datos. Los parámetros y las cadenas de configuración se agrupan a través de palabras clave de configuración.
+
+Esto nos muestra todos los parametros que tenemos activos dentro de la base de datos.
+~~~SQL
+SQL> show parameter
+~~~
+Esta es una Vista que nos muestra mas informacion sobre los parametros pero con muchos mas detalles.
+~~~SQL
+SQL># Formateamos las columnas para que sea mas legible
+SQL> COL NAME FORMAT A30
+SQL> COL VALUE FORMAT A30
+SQL> SELECT * FROM V$PARAMETER
+~~~
+
+Si queremos por ejemplo ver los parametros de la BASE DE DATOS que tienen el nombre ***CACHE***, ***SGA***
+~~~sql
+SQL> # EXTRAER LOS PARAMETROS QUE CONTENGAN CACHE
+SQL> SELECT NAME, VALUE FROM V$PARAMETER WHERE UPPER(NAME) LIKE '%CACHE%'
+~~~
+~~~sql
+SQL> # EXTRAER LOS PARAMETROS QUE CONTENGAN SGA
+SQL> SELECT NAME, VALUE FROM V$PARAMETER WHERE UPPER(NAME) LIKE '%SGA%'
+~~~
+
+
+En geodatabases almacenadas en una base de datos de Oracle, los pares de cadenas nombre del parámetro-configuración son utilizados por ArcGIS para los fines siguientes:
+
++ Establecer las características de almacenamiento de las tablas y los índices.
++ Definir el tipo de almacenamiento para columnas de atributos, ráster y espaciales.
++ Definir la manera de almacenar los documentos XML.
++ Habilitar las palabras clave para los usuarios en la interfaz de ArcGIS.
++ Proporcionar comentarios que describan la palabra clave de configuración.
+
+
+
 
 # 
 # 
