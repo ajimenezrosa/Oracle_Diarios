@@ -1253,5 +1253,69 @@ esta vista muestra los valores que tienen estos parametros dentro del fichero de
 ### Tenemos tambien la vista V$SYSTEM_PARAMETER
     Esta vista me muestra los valores que estan cargados en toda la instancia.
 
+![](https://img.blog.itpub.net/blog/2018/11/15/958f813ea86eca89.png?x-oss-process=style/bb)
+En este caso realizamos un query de los campos con el nombre **ddl_lock_timeout** en la la vista ***V$system_parameter***
+
+~~~sql
+SQL> CONNECT / AS SYSDBA
+SQL> select value, ISPDB_MODIFIABLE, CON_ID
+ from V$SYSTEM_PARAMETER
+ where name = 'ddl_lock_timeout';
+~~~
+
+
+## LA VISTA V$SYSTEM_PARAMETER
+#### Que me muestra esta vista?
+#### Esta vista me muestra los valores que tengo cargados ahoramismo en la instancia.
+toda la instancia completa ***no ya a nivel de session***
+
++ SPFILE :
+    parametros con los que en teoria se arranca la base de datos.
+
++ SYSTEM: que son los que estan ahoramismo funcionando dentro de la instancia.
+
++ SESION: los valores que estan a nivel de session.
+
+## Cambiar parametros a nivel de sesion
+  #### para la modificacion de los parametros a nivel de session tendremos dos comandos
+####      1- alter session
+  + que nos permite modificar los parametros a nivel de session.
+####     2- alter system
++ Que nos permite modificar los parametros a nivel de SISTEMA.  
+
+~~~sql
+SQL> DESC V$PARAMETER
+~~~
+![](https://ittutorial.org/wp-content/uploads/2019/09/Screenshot_1-3.png)
+
+
+como ver los parametros de lenguaje, de Idiomas.
+~~~sql
+ SQL> SELECT NAME , VALUE FROM V$PARAMTER WHERE NAME LIKE '%language%';
+~~~
+
+si deseo cambiar los parametros de Idiomas puedo hacerlo de la siguiente forma. 
+~~~sql
+SQL> ALTER SESSION SET NLS_LANGUAGE='SPANISH';
+~~~
+en que me afecta eso.
+bueno si ejecuto el siguiente comando con los parametros seteados en tipo 'AMERICAN'
+~~~SQL
+SQL> SELECT TO_DATE('1-ENE-20') FROM DUAL;
+~~~
+me presenta un error.
+esto porque el sistema no reconoce la instruccion o el string  ***'1-ENE-20'*** si lo cambio de la siguiente forma.
+~~~sql
+SQL> C .ENE.JAN.
+~~~
+
+el comando ya no nos presentara error.  Otra forma de hacer esto podria ser cambiar los parametros de ***SESSION*** de nuestra base de datos.
+**COMO MOSTRAMOS ANTERIORMENTE.**
+debemos tener en cuenta que esto afecta muchas otras cosas. **los simbolos de MOneda. las puntuaciones , etc**
+
+si verifico esta parametro a nivel de instancia veremos que no se ha modificado.  solo lo modifique a  nivel de la **SESSION**.
+~~~sql
+SQL> SELECT VALUE FROM V$SYSTEM_PARAMETER  WHERE NAME ='NLS_LANGUAGE';
+~~~
 
 
