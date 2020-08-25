@@ -984,6 +984,109 @@ si verifico esta parametro a nivel de instancia veremos que no se ha modificado.
 SQL> SELECT VALUE FROM V$SYSTEM_PARAMETER  WHERE NAME ='NLS_LANGUAGE';
 ~~~
 
+# Cambiar parametros a nivel de sistema
+
+Debemos notar que no todos los parametros podran ser modificados en caliente.
+
+algunos de ellos no permitiran que se modifiquen IN MOMORY.
+
+el comando que se utiliza para hacer las modificaciones de los parametros del sistema es el siguiente:
+~~~sql
+SQL> SELECT NAME, VALUE FROM V$SYSTEM_PARAMETER WHERE NAME ='processes'
+SQL> ALTER SYSTEM SET PROCESSES=400;
+~~~
+esto presentaria un error similar al siguiente;
+~~~sql
+ERROR  en linea 1:
+ORA-02095: el parametro de inicializacion especificado no se puede modificar
+~~~
+
+El error que nos presenta basicamente nos dice que es un parametro que no puede ser modificado en caliente , sino en frio.
+
+#### Los cambios a nivel de sistemas podemas hacerlos de dos formas distintas.
+  1- A nivel de MEMORY (MEMORIA) estos cambios seran validos para todo el sistema y todas las sessiones pero al reiniciar la maquina se retornan los valores orginales que son los que estan o el que esta en el ***SPFILE***.
+
+  2- La otra forma es hacerlo en el ***SPFILE*** de esta forma se asigna de forma permanente pero para que estos cambios sean asignados debo reiniciar la BASE DE DATOS.
+
+  3- SI PONGO LA CLAUSULA **BOTH** se cambia tanto en memoria como en el ***SPFILE***
+
+
+como comentaba existen parametros que no pueden ser cambiados en MEMORY,.
+~~~SQL
+SQL> ALTER SYSTEM SET PROCESSES=400 SCOPE=MEMORY;
+ERROR  en linea 1:
+ORA-02095: el parametro de inicializacion especificado no se puede modificar
+~~~
+***me da un error***
+
+Para modificar este parametro debo hacer lo en ***fichero***
+
+~~~sql
+SQL> C .MEMORY.SPFILE.
+    1* ALTER SYSTEM SET PROCESSES=400 SCOPE=SPFILE;
+~~~
+Si realizamos un select veremos que en memory el valor no ha cambiado.
+~~~sql
+SQL> SELECT NAME, VALUE FROM V$SYSTEM_PARAMETER WHERE NAME='processes'
+~~~
+| NAME      |  VALUE    |
+|-----------|-----------|
+|processes  |300        |
+
+#### para que el valor se aplique de en el sistema debo reinicar la base de datos.
+~~~sql
+SQL> shutdown immediate;
+~~~
+Y luego
+~~~sql
+SQL> startup
+~~~
+Si hacemos un select vemos que ya lo cambia.
+~~~sql
+SQL> SELECT NAME, VALUE FROM V$SYSTEM_PARAMETER WHERE NAME='processes'
+~~~
+| NAME      |  VALUE    |
+|-----------|-----------|
+|processes  |400        |
+
+### OPTIMIZER MODE
+
+es el valor por defecto de optimizacion que tendria al base de datos.
+ **para verlo**
+ ~~~sql
+SQL> SELECT NAME, VALUE FROM V$SYSTEM_PARAMETER WHERE NAME ='optimizer_mode'
+ ~~~
+| NAME           |  VALUE    |
+|----------------|-----------|
+|optimizer_mode  |ALL_ROWS   |
+
+#### Que quiere decir esto, bueno la base de datos esta optimizada para que retorne lo mas rapidamente las primeras filas.  esto se puede cambiar ,por ejemplo si deseo que retorne lo mas rapidamente las primeras filas esto debido a que mis aplicaciones les es mas comodo funcionar asi.  Haremos lo siguiente.
+ ~~~sql
+
+SQL> ALTER SYSTEM SET OPTIMIZER_MODE=FIRST_ROWS;
+SQL> SELECT NAME, VALUE FROM V$SYSTEM_PARAMETER WHERE NAME ='optimizer_mode';
+ ~~~
+| NAME           |  VALUE    |
+|----------------|-----------|
+|optimizer_mode  |FIRST_ROWS |
+
+#### Un ejemplo de las tres formas que tenemos para realizar los cambios.
+~~~sql
+# de esta forma se realizan los cambios directamente en Memoria.
+SQL> ALTER SYSTEM SET OPTIMIZER_MODE=FIRST_ROWS;
+# esto seria como decir lo siguiente.
+SQL> ALTER SYSTEM SET OPTIMIZER_MODE=FIRST_ROWS SCOPE=MEMORY;
+#===============================================
+# Para realizar los cambios a nivel de ficheros Files system
+SQL> ALTER SYSTEM SET OPTIMIZER_MODE=FIRST_ROWS SCOPE=SPFILE;
+#===============================================
+# En caso de querer realizar los cambios en los dos lugares a la vez utilizaremos lo siguiente.
+SQL> ALTER SYSTEM SET OPTIMIZER_MODE=FIRST_ROWS SCOPE=BOTH;
+
+
+
+~~~
+
 
 
  # 11:Conexiones y Redes en Oracle. Listener
