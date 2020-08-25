@@ -986,8 +986,51 @@ SQL> SELECT VALUE FROM V$SYSTEM_PARAMETER  WHERE NAME ='NLS_LANGUAGE';
 
 
 
+ # 11:Conexiones y Redes en Oracle. Listener
+## 50. Introducción a las conexiones y Redes en Oracle
+![](https://blog.toadworld.com/hubfs/Imported_Blog_Media/2772_c1-1.jpg)
+###  **Acerca de las Conexiones de Base de Datos**
+#### Oracle BI Cloud Service puede manejar datos almacenados en las bases de datos de Oracle Cloud. Simplemente conecte Oracle BI Cloud Service a los orígenes de datos de la nube para comenzar a analizar los datos. No importa si los datos de su empresa están almacenados en varios lugares diferentes. Dado que puede conectar Oracle BI Cloud Service a varias bases de datos en la nube, los analistas de negocio pueden analizar todos sus datos con independencia de dónde estén guardados.
+#
+####  Los administradores crean, gestionan y prueban conexiones a la base de datos para Oracle BI Cloud Service. Los modeladores de negocio pueden ver las bases de datos conectadas a través de Data Modeler y crear modelos de negocio a partir de los datos.
+#
+### **Acerca de la Conexión de Base de Datos por Defecto**
+
+#### Oracle BI Cloud Service se conecta al servicio de esquema de base de datos a través de la conexión por defecto. No puede suprimir esta conexión. La conexión por defecto está siempre disponible.
+
+#### El servicio de esquema de datos es el servicio basado en un esquema único integrado con Oracle BI Cloud Service. No tiene que crear una conexión para usar esta base de datos.
+
+### Bases de Datos a las que Puede Conectarse
+
+#### Puede conectar Oracle BI Cloud Service a las bases de datos de Oracle Cloud. La base de datos de destino debe ser Oracle Database Cloud Service.
+
+#### Conexiones de Bases de Datos de Modelos de Datos Cargados desde Oracle BI Enterprise Edition
+
+#### No es necesario que introduzca la información de conexión a la base de datos para los modelos de datos que llevan incorporado previamente Oracle BI Enterprise Edition. La información de conexión de estos modelos se encuentra en el archivo del modelo de datos (.rpd) que se carga en Oracle BI Cloud Service. Consulte Acerca de la carga de modelos de datos de Oracle BI Enterprise Edition en la nube.
 
 
+## 51. Conexiones locales y servicios
+
+## 52. Formas de Conexión
+
+## 53. LISTENER. Ficheros de configuración
+
+## 54. Crear un Listener
+
+## 55. Utilidad LSNRCTL.
+
+## 56. Crear SQLNET y TNSNAMES
+
+
+
+
+#
+#
+#
+#
+#
+#
+# 
 
 
 
