@@ -1197,6 +1197,72 @@ un ejemplo de una conexion de este tipo seria la siguiente:
 ## 53. LISTENER. Ficheros de configuración
 
 
+#### ***LISTENER***: ES ESA PIESA QUE ACTUA COMO INTERMEDIARIO ENTRE LA BASE DE DATOS Y EL CLIENTE QUE SE QUIERE CONECTAR A ELLA.
+
+
+#### Para poder trabajar de forma correcto con lo que se trata de ***NETWORKING***
+#### es necesaio tener en cuanta los sugiente.
+### Hay 3 ficheros basicos en la configuracion de red dentro de Oracle.
+
+  + listner.ora
+  + tnsname.ora
+  + sqlnet.ora
+
+
+### son los 3 basicos existen mas , de acuerdo a como tenemos configurada nuestra adquitectura.
+
+# 
+### LISTENER.ORA
++ El archivo "listener.ora" contiene parametros de configuracion del lado del servidor.
++ se encuentra en el directorio "$ORACLE_HOME/network/admin" en el servidor.
++ Indica el comportamiento del LISTENER
+
+
+el listener debe ser configurado de otra forma no funcionara.
+
+~~~sql
+LISTENER =
+(DESCRIPTION_LIST =
+(DESCRIPTION =
+(ADDRES=(PROTOCOL =IP)(KEY = EXTPROC1))
+(ADDRES =(PROTOCOL =TCP)(HOST=servidor1)PORT = 1521))
+)
+)
+~~~
+~~~sql
+SID_LIST_LISTENER =
+(SID_LIST =
+(SID_DESC =
+(BLOBAL_DBNAME=orcl.example.com)
+(ORACLE_HOME=/u01/app/oracle/product/19.3.0.9/db_1)
+(SID_NAME=orcl)
+)
+)
+~~~
+
+
+**El puerto 1521 es el puerto pre definito para las bases de datos ORACLE**
+
+
+### TNSNAME.ORA
+  + El archivo "tnsnames.ora" contiene parametros de configuracion de red del lado del cliente.
+  + se puede encontrar en el directorio "ORACLE_HOME/network/admin" en el cliente.
+  + Este archivo tambien estara presente en el servidor si se utilizan conexiones de estilo de cliente en el propio servidor.
+
+  ~~~sql
+    CURSO.EJEMPLO.COM =
+    (DESCRIPTION =
+    (ADDRESD_LIST=
+    (ADDRESD=(PROTOCOL = TCP)(HOST= servidor1)(PORT= 1521))
+    )
+    (CONNECT_DATA =
+    (SERVICE_NAME=curso)
+    )
+    )
+  ~~~
+
+
+
 
 ## 54. Crear un Listener
 
