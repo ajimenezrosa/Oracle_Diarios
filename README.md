@@ -1115,8 +1115,88 @@ SQL> ALTER SYSTEM SET OPTIMIZER_MODE=FIRST_ROWS SCOPE=BOTH;
 ## 51. Conexiones locales y servicios
 
 ## 52. Formas de Conexión
+### modos de conexion.
+|TIPO           |    DESCRIPCION        |
+|---------------|-----------------------|
+|EASY CONNNET   | Cadena de TCP/IP      |
+|LOCAL NAMING   | Fichero de onfiguracion local |
+| DIRECTORY NAMING | Uso ldap o Similar         |
+| EXTERNAL NAMING | Uso de servicios de nombres de terceros |
+
+#
+
+### EASY CONNECT
++ esta activado por defecto.
++ solo soporta TCP/IP , no soporta ssl
++ no dispone de de caracteristicas como fallover routing etc.
+
+un ejemplo de una conexion de este tipo seria la siguiente:
+~~~SQL
+  connnect usuario/pass@maquina:puerto/base_de_datos
+~~~
+
+#### en este caso ya habra un ***listerner***  designado para atender esta peticion.  Un listerner por el momento podemos pensar en el como un servicio un **PGA** pordriamos decir asi.
+
+#### este proceso ya se desentiende. a aparte de la conexion.
+
+![](https://blog.toadworld.com/hubfs/Imported_Blog_Media/2772_c1-1.jpg)
+
+
+### LOCAL NAMING
+  + Necesitamos tener un fichero de configuracion en el cliente
+    + ORACL_HOME/network/admin/tnsnames.ora
+
+  + Soporta todos los protocolos Oracle NET
+  + Dispone de caracteristicas como fallover, routing, etc
+
+  ~~~sql
+      connect usuario/pass@servicio
+  ~~~
+  +  TNSNAME.ORA
+  + LISTENER
+  + BASE DE DATOS
+  
+  # 
+
+
+  
+  ### DIRECTORY NAMING
+
+    + Oracle NET accede a un servicio de nombres
+          +  ORACLE INTERNET DIRECTORY(OID)-ACTIVE DRIECTORY
+    + Soporta todos los protocolos Oracle NET
+    + Dispone de caracteristicas como fallover, routing , etc
+
+    ~~~sql
+      Connect usuario/pass@servicio
+    ~~~
+      + LDAP
+      + LISTENER
+      + BASE DE DATOS
+  # 
+
+  ### EXTERNAL NAMING
+   
+    + Oracle NET accede a un servicio de nombres
+          +  NIS-CDE-CDS, ETC....
+    + Soporta todos los protocolos Oracle NET
+    + Dispone de caracteristicas como fallover, routing , etc
+
+    ~~~sql
+      Connect usuario/pass@servicio
+    ~~~
+      + EXTERNOS
+      + LISTENER
+      + BASE DE DATOS
+  # 
+
+
+
+
 
 ## 53. LISTENER. Ficheros de configuración
+
+
 
 ## 54. Crear un Listener
 
