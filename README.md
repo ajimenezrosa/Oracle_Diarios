@@ -1262,11 +1262,67 @@ SID_LIST_LISTENER =
   ~~~
 
 
+### SQLNET.ORA
+  + El archivo "sqlnetora" contiene parametros de configuracion de red del lado cliente.
+  + Se puede encontrar en el direcorio "$ORACLE_HOME/network/admin" en el cliente
+  + Este archivo tambien estara presente en el servidor si se utilizan conexiones de estilo cliente en el propio servidor o si se requiere alguna congiracion de conexion de servidor adicional.
+
+  ~~~sql
+    NAME.DIRECTORY_PATH =(TNSMANES.ONAMES, HOSTNAME)
+    (NAMES.DEFAULT_DOMAIN = example.com)
+
+
+    # The following entre is necesary on windows if OS authentication is requiered.
+    SQLNET.AUTHENTICATION_SERVICES=(NTS)
+  ~~~
+
+
+
+
 
 
 ## 54. Crear un Listener
 
+#### Para crear un listener podemos hacer los de varias formas.  Lo mas comun lo que generalmente hacemos es al crear nuestra primera base de datos marcamos en la pantalla de creacion el checkbox **crear listener** 
+
+#### Nosotros a proposito decidimos no crearlos esto para abundar mas y explicar como podemos crear un listener en caso de se necesario.
+
+#### Para esto tenemos el comando ***netca***  **network configuartion asistent**
+#### esto me permite configurar un listener , definir los metodos de naming, configurar servico local. y configurar en caso de tener algun directorio.
+
+
+
+#
+
 ## 55. Utilidad LSNRCTL.
+
+#### Existe un comando se que llama ***LSNRCTL *** LISTENER CONTROL
+
+~~~SQL
+[oracle@nodo1 admin]$ lsnrctl
+
+LSNRCTL for linux: Version 19.0.0.0.0 - Production on 17-may-2020 19:54:42
+
+Copyright (c) 1991, 2019, Oracle. All right reserved
+
+Welcome to LSNRCTL, type "help" for information.
+
+LSNRCTL>
+~~~
+
+SI digitamos ***help*** en este modo nos presentara los siguientes comandos que podemos utilizar.
+
+|                |                |           |             |
+|----------------|----------------|-----------|-------------|
+|   start        |   stop         | status    |services     |
+|servacls       | version         | reload    | save_config |
+|trace          | spawn           | quit      | exit        |
+| set*          | show*           |           |             |
+
+
+
+
+
 
 ## 56. Crear SQLNET y TNSNAMES
 
